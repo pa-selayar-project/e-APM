@@ -39,8 +39,6 @@ class HomeController extends Controller
         $x = Eviden::where([['area_id', $id], ['file_upload', '!=', '']])->count();
         $y = Eviden::where('area_id', $id)->count();
 
-        dd($x);
-
         return $x / $y;
     }
 }
