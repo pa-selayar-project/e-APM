@@ -91,7 +91,8 @@
 
 
                 @if($d->file_upload)
-                <a href=# class="text-danger download" data-file="{{asset('assets/pdf')}}/{{$d->file_upload}}" data-target="#lihat" data-toggle="modal" title="Upload"><i class="fa  fa-file-pdf-o fa-lg"></i></a>
+                <a href=# class="text-danger download" data-id="{{$d->id}}" data-target="#lihat" data-toggle="modal" title="Upload"><i class="fa  fa-file-pdf-o fa-lg"></i></a>
+                <!-- <a href=# class="text-danger download" data-file="{{asset('assets/pdf')}}/{{$d->file_upload}}" data-target="#lihat" data-toggle="modal" title="Upload"><i class="fa  fa-file-pdf-o fa-lg"></i></a> -->
                 @else
                 <a href=# class="edit m-r-15" data-id="{{$d->id}}" data-eviden="{{$d->nama_eviden}}" data-area="{{$d->area_id}}" data-kriteria="{{$d->kriteria_id}}" data-nomor="{{$d->nomor_urut}}" data-file="{{$d->file_upload}}" data-toggle="modal" data-target="#tambah"><i class="fa  fa-file-pdf-o fa-lg"></i></a>
                 @endif
@@ -205,9 +206,7 @@
           x
         </button>
       </div>
-      <center>
-        <embed src="#" height="700px" width="700px">
-      </center>
+        <embed src="#" type="application/pdf" height="700px" width="100%">
     </div>
   </div>
 </div>
@@ -245,8 +244,16 @@
     });
 
     $('.download').on('click', function() {
-      const file = $(this).data('file');
-      $('embed').attr('src', file);
+      const id = $(this).data('id');
+
+      $.ajax({
+        url:'eviden/get_data/'+id,
+        method:'get',
+        success:function(result){
+          $('#lihat embed').attr('src',  result);  
+        }
+      });
+      
     });
   });
 </script>

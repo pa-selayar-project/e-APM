@@ -24,10 +24,10 @@ class lke1Controller extends Controller
         return view('lke_1.index', ['data' => $data]);
     }
 
-    public function frontEnd()
+    public function get_data($id)
     {
-        $data = Assesmen::paginate(10);
-        return view('welcome', ['data' => $data]);
+        $data = Eviden::where('id', $id)->first();
+        return url('assets/pdf/'.$data->file_upload);        
     }
 
     public function store(Request $request)
@@ -69,7 +69,6 @@ class lke1Controller extends Controller
             ], $messages);
         }
     }
-
 
     private function storeFile($request, $update)
     {

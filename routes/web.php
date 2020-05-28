@@ -1,21 +1,10 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-Route::get('/', 'lke1Controller@frontEnd');
+Route::get('front/get_data/{id}', 'FrontController@get_data');
+Route::get('/', 'FrontController@index');
 
 Auth::routes();
 Route::post('logout', 'Auth\LoginController@logout');
-Route::get('home', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['auth', 'CheckRole:1']], function () {
     Route::resource('menu', 'MenuController');
     Route::resource('submenu', 'SubmenuController');
@@ -23,6 +12,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:1']], function () {
     Route::resource('profil', 'ProfilController');
     Route::resource('kriteria', 'KriteriaController');
     Route::resource('area', 'AreaController');
+    Route::get('eviden/get_data/{id}', 'EvidenController@get_data');
     Route::resource('eviden', 'EvidenController');
     Route::resource('assesmen', 'AssesmenController');
     Route::post('eviden/import', 'EvidenController@import');
@@ -30,12 +20,8 @@ Route::group(['middleware' => ['auth', 'CheckRole:1']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'CheckRole:1,2']], function () {
-    Route::resource('sklist', 'SklistsController');
-    Route::resource('soplist', 'SoplistController');
-    Route::resource('kgblist', 'KgblistController');
-    Route::resource('kplist', 'KplistController');
-    Route::resource('sclist', 'SclistController');
-    Route::resource('stlist', 'StlistController');
+    Route::get('dashboard', 'HomeController@index');
+    Route::get('lke_1/get_data/{id}', 'lke1Controller@get_data');
     Route::resource('lke_1', 'lke1Controller');
     Route::post('lke_1/hapus_pdf/{id}', 'lke1Controller@hapus_pdf');
 });

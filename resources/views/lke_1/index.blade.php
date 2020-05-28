@@ -143,9 +143,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <center>
-          <embed src="#" height="450px" width="700px">
-        </center>
+        <embed src="#" type="application/pdf" height="450px" width="100%">
       </div>
       <div class="modal-footer">
         <form method="POST" action="lke_1">
@@ -170,10 +168,16 @@
     });
 
     $('.download').on('click', function() {
-      const file = $(this).data('file'),
-            id = $(this).data('id');
-      $('embed').attr('src', file);
-      $('#lihat form').attr('action', `{{url('/lke_1/hapus_pdf/` + id + `')}}`)
+      const id = $(this).data('id');
+
+      $.ajax({
+        url:'lke_1/get_data/'+id,
+        method:'get',
+        success:function(result){
+          $('#lihat embed').attr('src',  result);  
+        }
+      });
+      
     });
   });
 </script>

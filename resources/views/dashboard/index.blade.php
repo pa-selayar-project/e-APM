@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Home')
+@section('title','Dashboard')
 
 @section('stylesheet')
 <script>
@@ -34,13 +34,13 @@
 @endsection
 
 @section('breadcumb')
-@if (session('status'))
-<div class="alert alert-success" role="alert">
-	{{ session('status') }}
-</div>
-@endif
+	@if (session('status'))
+		<div class="alert alert-success" role="alert">
+			{{ session('status') }}
+		</div>
+	@endif
 
-<p class="text-muted page-title-alt">Selamat datang {{Auth::user()->jenis_user}} {{Auth::user()->name}}!</p>
+	<p class="text-muted page-title-alt">Selamat datang {{Auth::user()->jenis_user}} {{Auth::user()->name}}!</p>
 @endsection
 
 @section('content')

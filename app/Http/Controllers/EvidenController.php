@@ -49,6 +49,12 @@ class EvidenController extends Controller
         return Redirect::back()->with('message', 'Data Eviden Berhasil dihapus');
     }
 
+    public function get_data($id)
+    {
+        $data = Eviden::where('id', $id)->first();
+        return url('assets/pdf/'.$data->file_upload);        
+    }
+
     public function import(Request $request)
     {
         $request->validate(

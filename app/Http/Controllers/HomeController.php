@@ -13,6 +13,7 @@ class HomeController extends Controller
 {
     public function index()
     {
+        
         $dataPoints = array(
             array("label" => "Pimpinan", "y" => $this->area(1)),
             array("label" => "Hakim Pengawas", "y" => $this->area(2)),
@@ -31,7 +32,7 @@ class HomeController extends Controller
             array("label" => "TI", "y" => $this->area(16))
         );
 
-        return view('home', ['dataPoints' => $dataPoints]);
+        return view('dashboard.index', ['dataPoints' => $dataPoints]);
     }
 
     private function area($id)

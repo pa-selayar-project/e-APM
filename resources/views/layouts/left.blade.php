@@ -7,7 +7,7 @@
         <li class="text-muted menu-title">Menu Utama</li>
 
         <li class="{{ Request::is('home') ? 'active' : '' }}">
-          <a href="{{url('/home')}}" class="waves-effect"><i class="ti-home"></i> <span> Home </span></a>
+          <a href="{{url('dashboard')}}" class="waves-effect"><i class="ti-home"></i> <span> Dashboard </span></a>
 
         </li>
         <?php
