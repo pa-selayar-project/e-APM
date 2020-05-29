@@ -49,7 +49,7 @@
     <div class="wrapper-page">
         <div class=" card-box">
             <div class="panel-heading">
-                <h3 class="text-center"> Sign In to <strong class="text-custom">Kepeg App</strong> </h3>
+                <h3 class="text-center">Welcome to <strong class="text-custom">e-APM</strong> </h3>
             </div>
 
 
@@ -59,8 +59,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12 text-center">
-                <p>Don't have an account? <a href="page-register.html" class="text-primary m-l-5"><b>Sign Up</b></a></p>
-
+                @yield('message')
             </div>
         </div>
     </div>

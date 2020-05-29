@@ -1,13 +1,6 @@
 @extends('layouts.login')
 
 @section('content')
-<!-- <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
-                <div class="card-body"> -->
 <form method="POST" action="{{ route('register') }}">
     @csrf
 
@@ -89,17 +82,14 @@
         </div>
     </div>
 
-    <div class="form-group row mb-0">
-        <div class="col-md-6 offset-md-4">
-            <button type="submit" class="btn btn-primary">
-                {{ __('Register') }}
-            </button>
-        </div>
+    <div class="form-group row mb-0 text-right">
+        <button type="submit" class="btn btn-primary">
+            {{ __('Register') }}
+        </button>
     </div>
 </form>
-<!-- </div>
-            </div>
-        </div>
-    </div>
-</div> -->
+@endsection
+
+@section('message')
+    <p>Kembali ke Halaman <a href="{{ route('login') }}" class="text-primary m-l-5"><b>Login</b></a></p>
 @endsection
