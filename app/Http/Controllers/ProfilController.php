@@ -19,7 +19,9 @@ class ProfilController extends Controller
 
     public function update(Request $request, Profil $profil)
     {
-        Storage::delete('images/' . $profil->image);
+        if($profil->image != 'no_user_avatar.png'){
+            Storage::delete('images/' . $profil->image);
+        }
 
         $profil->update($this->validasiRequest());
         $this->storeFile($request, $profil);

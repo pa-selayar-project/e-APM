@@ -11,7 +11,7 @@
 @section('breadcumb')
 <ol class=" breadcrumb">
   <li>
-    <a href="{{url('/')}}">Register</a>
+    <a href="{{url('/')}}">LKE APM</a>
   </li>
   <li>
     <a href="{{url('/profil')}}" class="active">Profil</a>
@@ -48,9 +48,9 @@
               <tr>
                 <td rowspan="4">
                   @if(Auth::user()->image != '')
-                  <img src="{{url('assets/images')}}/{{Auth::user()->image}}" alt="user-img" class="img-thumbnail" height="220" witdh="160">
+                  <img src="{{url('assets/images')}}/{{Auth::user()->image}}" alt="user-img" height="220" witdh="160">
                   @else
-                  <img src="{{url('assets/images/no_user_avatar.png')}}"  alt="user-img" class="img-thumbnail" height="220" witdh="160">
+                  <img src="{{url('assets/images/no_user_avatar.png')}}"  alt="user-img" height="220" witdh="160">
                   @endif
                 </td>
                 <td>Nama / Username</td>
