@@ -4,7 +4,7 @@
   <div class="topbar-left">
     <div class="text-center">
 
-      <a href="{{url('home')}}" class="logo">
+      <a href="{{url('dashboard')}}" class="logo">
         <img src="{{url('assets/images/favicon.png')}}" height="40" width="35"></i>
         <span><img src="{{url('assets/images/logo_light.png')}}" height="20" /></span>
       </a>
@@ -45,8 +45,13 @@
             <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="icon-size-fullscreen"></i></a>
           </li>
           <li class="dropdown top-menu-item-xs">
-            <a href="javascript:void(0);" class="dropdown-toggle profile waves-effect waves-light text-white" data-toggle="dropdown" aria-expanded="true"><img src="{{url('assets/images')}}/{{Auth::user()->image}}" alt="user-img" class="img-circle m-l-5 m-r-15">
-              {{Auth::user()->name}}
+            <a href="javascript:void(0);" class="dropdown-toggle profile waves-effect waves-light text-white" data-toggle="dropdown" aria-expanded="true">
+              @if(Auth::user()->image != '')
+              <img src="{{url('assets/images')}}/{{Auth::user()->image}}" alt="user-img" class="img-circle m-l-5 m-r-15">
+              @else
+              <img src="{{url('assets/images/no_user_avatar.png')}}"  alt="user-img" class="img-circle m-l-5 m-r-15">
+              @endif
+                {{Auth::user()->name}}
             </a>
             <ul class="dropdown-menu">
               <?php $menus = \App\MenuProfil::all(); ?>

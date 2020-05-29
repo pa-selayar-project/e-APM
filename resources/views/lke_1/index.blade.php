@@ -146,8 +146,9 @@
         <embed src="#" type="application/pdf" height="450px" width="100%">
       </div>
       <div class="modal-footer">
-        <form method="POST" action="lke_1">
+        <form method="POST" action="#">
           @csrf
+          @method("PATCH")
           <button type="submit" class="btn btn-danger">
             Hapus File
           </button>
@@ -169,6 +170,7 @@
 
     $('.download').on('click', function() {
       const id = $(this).data('id');
+      $('.modal-footer form').attr('action',  'lke_1/hapus_pdf/'+id);  
 
       $.ajax({
         url:'lke_1/get_data/'+id,

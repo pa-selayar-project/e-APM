@@ -16,20 +16,19 @@ class HomeController extends Controller
         
         $dataPoints = array(
             array("label" => "Pimpinan", "y" => $this->area(1)),
-            array("label" => "Hakim Pengawas", "y" => $this->area(2)),
-            array("label" => "Hakim Wasmat", "y" => $this->area(3)),
-            array("label" => "Hakim", "y" => $this->area(4)),            array("label" => "Internal Asesor", "y" => $this->area(5)),
-            array("label" => "SKM", "y" => $this->area(6)),
-            array("label" => "Panmud Hukum", "y" => $this->area(7)),
-            array("label" => "Document Control", "y" => $this->area(8)),
-            array("label" => "Panmud Gugatan", "y" => $this->area(9)),
-            array("label" => "Panmud Permohonan", "y" => $this->area(10)),
-            array("label" => "Panmud Jinayat", "y" => $this->area(11)),
-            array("label" => "PP", "y" => $this->area(12)),
-            array("label" => "JS/JSP", "y" => $this->area(13)),
-            array("label" => "Kepeg", "y" => $this->area(14)),
-            array("label" => "Umum", "y" => $this->area(15)),
-            array("label" => "TI", "y" => $this->area(16))
+            array("label" => "Hakim WasBid", "y" => $this->area(2)),
+            array("label" => "Hakim", "y" => $this->area(3)),
+            array("label" => "Internal Asesor", "y" => $this->area(4)),            
+            array("label" => "SKM", "y" => $this->area(5)),
+            array("label" => "Panmud Hukum", "y" => $this->area(6)),
+            array("label" => "Document Control", "y" => $this->area(7)),
+            array("label" => "Panmud Gugatan", "y" => $this->area(8)),
+            array("label" => "Panmud Permohonan", "y" => $this->area(9)),
+            array("label" => "PP", "y" => $this->area(11)),
+            array("label" => "JS/JSP", "y" => $this->area(12)),
+            array("label" => "Kepeg", "y" => $this->area(13)),
+            array("label" => "Umum", "y" => $this->area(14)),
+            array("label" => "TI", "y" => $this->area(15))
         );
 
         return view('dashboard.index', ['dataPoints' => $dataPoints]);
@@ -40,6 +39,6 @@ class HomeController extends Controller
         $x = Eviden::where([['area_id', $id], ['file_upload', '!=', '']])->count();
         $y = Eviden::where('area_id', $id)->count();
 
-        return $x / $y;
+        return ($x / $y) *100;
     }
 }

@@ -47,7 +47,11 @@
             <tbody>
               <tr>
                 <td rowspan="4">
-                  <img src="{{url('assets/images')}}/{{$data->image}}" class="img-thumbnail" height="220" width="160" />
+                  @if(Auth::user()->image != '')
+                  <img src="{{url('assets/images')}}/{{Auth::user()->image}}" alt="user-img" class="img-thumbnail" height="220" witdh="160">
+                  @else
+                  <img src="{{url('assets/images/no_user_avatar.png')}}"  alt="user-img" class="img-thumbnail" height="220" witdh="160">
+                  @endif
                 </td>
                 <td>Nama / Username</td>
                 <td>{{$data->name}} / {{$data->username}}</td>
