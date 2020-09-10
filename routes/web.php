@@ -2,6 +2,8 @@
 
 Route::get('front/get_data/{id}', 'FrontController@get_data');
 Route::get('/', 'FrontController@index');
+Route::get('front/get_front/{id}', 'FrontController@get_front');
+Route::get('front/label/{id}', 'FrontController@get_front');
 
 Auth::routes();
 Route::post('logout', 'Auth\LoginController@logout');
