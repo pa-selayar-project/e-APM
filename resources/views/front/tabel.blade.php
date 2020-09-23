@@ -17,7 +17,7 @@
           </td>
           <td class="text-center" style="width:17%" valign="top">
             @if($e->file_upload)
-              <a href=# class="text-danger download" data-id="{{$e->id}}" data-target="#lihat" data-toggle="modal" title="Klik untuk lihat file"><i class="fa fa-file-pdf-o fa-lg"></i></a>
+              <a href=# class="text-danger download" data-id="{{$e->id}}" data-file="{{asset('assets/pdf')}}/{{$e->file_upload}}" data-target="#lihat" data-toggle="modal" title="Klik untuk lihat file"><i class="fa fa-file-pdf-o fa-lg"></i></a>
             @else
               <a href=# class="text-secondary" title="Belum ada File"><i class="fa fa-file-pdf-o fa-lg"></i></a>
             @endif
@@ -32,7 +32,8 @@
 <tfoot>
   <tr>
     <td colspan="5">
-      {{ $asses->links() }}
+    {{$asses->links()}}
     </td>
   </tr>
 </tfoot>
+

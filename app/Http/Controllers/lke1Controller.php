@@ -18,7 +18,7 @@ class lke1Controller extends Controller
         if ($user === 'ADMIN') {
             $data = Assesmen::paginate(10);
         } else {
-            $data = Assesmen::where('area', $user)->paginate(10);
+            $data = Assesmen::where('area', $user)->paginate(5);
         }
 
         return view('lke_1.index', ['data' => $data]);

@@ -96,7 +96,6 @@
 	</div>
 	
     <!-- //-------modal Download--------- -->
-
 <div id="lihat" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -112,6 +111,7 @@
 	</div>
 </div>
 
+
 <!-- jQuery  -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -122,6 +122,19 @@
   $(document).ready(function() {
       
 		$(".chosen-select").chosen();
+
+    $('#lihat').on('show.bs.modal', function(e) {
+      const id = $(e.relatedTarget).data('id'),
+						file= $(e.relatedTarget).data('file');
+
+			$.ajax({
+				url:'front/get_data/'+id,
+        method:'get',
+        success:function(result){
+					$('#lihat embed').attr('src', result); 
+        }
+			});  
+    });
 
 		$('#area').on('change', function(){
 			const id=$(this).val();
@@ -137,27 +150,16 @@
 		
 		}); 
 
-		// $('.page-item a').on('click', function(event) {
-		// 	event.preventDefault();
-		// 	console.log($(this).attr('href'));
-		// 	$('tbody').empty();
-		// 	$('tfoot').remove();
-		// 	// if ($(this).attr('href') != '#') {
-		// 	// // $('tbody').load($(this).attr('href'));
-		// 	// }
-		// });
+		$('.page-link').on('click', function(event) {
+			event.preventDefault();
+			console.log($(this).attr('href'));
+			$('tbody').empty();
+			$('tfoot').remove();
+			// if ($(this).attr('href') != '#') {
+			// // $('tbody').load($(this).attr('href'));
+			// }
+		});
 
-    $('.download a').on('click', function() {
-      const id = $(this).data('id');
-
-      $.ajax({
-        url:'front/get_data/'+id,
-        method:'get',
-        success:function(result){
-          $('#lihat embed').attr('src',  result);  
-        }
-      });
-    });
   });   
 </script>
 </body>
