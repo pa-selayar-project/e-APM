@@ -40,7 +40,7 @@
 		</div>
 	@endif
 
-	<p class="text-muted page-title-alt">Selamat datang {{Auth::user()->jenis_user}} {{Auth::user()->name}}!</p>
+	<p class="text-muted page-title-alt">Selamat datang {{Auth::user()->name}} ( {{ucwords(strtolower(Auth::user()->jenis_user))}} )!</p>
 @endsection
 
 @section('content')
