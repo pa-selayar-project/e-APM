@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','LKE 1 Telusur Dokumen')
+@section('title','LKE Telusur Dokumen')
 
 @section('stylesheet')
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -13,7 +13,7 @@
     <a href="{{url('/')}}">Register</a>
   </li>
   <li>
-    <a href="{{url('/apm/lke1')}}" class="active">LKE 1</a>
+    <a href="{{url('/apm/lke')}}" class="active">LKE</a>
   </li>
 </ol>
 @endsection
@@ -116,7 +116,7 @@
         </button>
         <h4 class="modal-title" id="myModal">Upload Dokumen</h4>
       </div>
-      <form method="POST" action="{{url('lke_1')}}" enctype="multipart/form-data">
+      <form method="POST" action="{{url('lke')}}" enctype="multipart/form-data">
         <div class="modal-body">
           <p class="patch"></p>
           @csrf
@@ -164,16 +164,16 @@
   $(document).ready(function() {
     $('.upload').on('click', function() {
       const id = $(this).data('id');
-      $('#tambah form').attr('action', `{{url('/lke_1/` + id + `')}}`);
+      $('#tambah form').attr('action', `{{url('/lke/` + id + `')}}`);
       $('.patch').html('@method("patch")');
     });
 
     $('.download').on('click', function() {
       const id = $(this).data('id');
-      $('.modal-footer form').attr('action',  'lke_1/hapus_pdf/'+id);  
+      $('.modal-footer form').attr('action',  'lke/hapus_pdf/'+id);  
 
       $.ajax({
-        url:'lke_1/get_data/'+id,
+        url:'lke/get_data/'+id,
         method:'get',
         success:function(result){
           $('#lihat embed').attr('src',  result);  

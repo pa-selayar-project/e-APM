@@ -21,7 +21,7 @@ class lke1Controller extends Controller
             $data = Assesmen::where('area', $user)->paginate(5);
         }
 
-        return view('lke_1.index', ['data' => $data]);
+        return view('lke.index', ['data' => $data]);
     }
 
     public function get_data($id)

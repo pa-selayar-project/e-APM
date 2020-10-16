@@ -17,8 +17,7 @@ class HomeController extends Controller
         $dataPoints = array(
             array("label" => "Pimpinan", "y" => $this->area(1)),
             array("label" => "Hakim WasBid", "y" => $this->area(2)),
-            array("label" => "Hakim", "y" => $this->area(3)),
-            array("label" => "Internal Asesor", "y" => $this->area(4)),            
+            array("label" => "Hakim", "y" => $this->area(3)),            
             array("label" => "SKM", "y" => $this->area(5)),
             array("label" => "Panmud Hukum", "y" => $this->area(6)),
             array("label" => "Document Control", "y" => $this->area(7)),

@@ -24,8 +24,8 @@
 
         <ul class="nav navbar-nav hidden-sm hidden-xs">
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Link Cepat <span class="caret"></span></a>
-            <!-- <ul class="dropdown-menu">
+            <!-- <a href="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Link Cepat <span class="caret"></span></a>
+             <ul class="dropdown-menu">
               <li><a href="#">Daftar SK</a></li>
               <li><a href="#">Daftar SOP</a></li>
               <li><a href="#">Daftar Surat Tugas</a></li>
