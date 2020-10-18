@@ -1,5 +1,8 @@
 <?php
 Auth::routes();
+Route::get('/', function(){
+    return view('auth.login');
+});
 Route::post('logout', 'Auth\LoginController@logout');
 Route::group(['middleware' => ['auth', 'CheckRole:1']], function () {
     Route::resource('menu', 'MenuController');
