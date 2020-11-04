@@ -12,7 +12,7 @@ class KriteriaController extends Controller
     public function index()
     {
         $data = Kriteria::paginate(10);
-        return view('kriteria.index', ['data' => $data]);
+        return view('admin/apm/kriteria/index', ['data' => $data]);
     }
 
     public function store(Request $request)
@@ -26,7 +26,7 @@ class KriteriaController extends Controller
     {
         $kriteria = Kriteria::where('id', $id)->update($this->validasiRequest('update'));
         Response::json($kriteria);
-        return redirect('kriteria')->with('message', 'Data Berhasil dirubah');
+        return redirect('admin/apm/kriteria')->with('message', 'Data Berhasil dirubah');
     }
 
     public function destroy(Request $request, $id)

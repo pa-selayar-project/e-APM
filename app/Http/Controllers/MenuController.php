@@ -12,7 +12,7 @@ class MenuController extends Controller
     public function index()
     {
         $data = Menu::paginate(10);
-        return view('menu.index', ['data' => $data]);
+        return view('admin/menu/index', ['data' => $data]);
     }
 
     public function store(Request $request)

@@ -14,4 +14,9 @@ class Submenu extends Model
     {
         return $this->belongsTo('App\Menu');
     }
+    
+    public function role()
+    {
+        return $this->belongsTo('App\Role');
+    }
 }

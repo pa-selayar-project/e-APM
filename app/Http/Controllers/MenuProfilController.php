@@ -8,33 +8,12 @@ use Redirect, Response;
 
 class MenuProfilController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $data = MenuProfil::paginate(10);
-        return view('menu_profil.index', ['data' => $data]);
+        return view('admin.menu_profil.index', ['data' => $data]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return Redirect::back();
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $messages = ['required' => 'kolom :attribute wajib diisi!'];
@@ -48,35 +27,6 @@ class MenuProfilController extends Controller
         return redirect('menu_profil')->with('message', 'Data Berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\MenuProfil  $menuProfil
-     * @return \Illuminate\Http\Response
-     */
-    public function show(MenuProfil $menuProfil)
-    {
-        return Redirect::back();
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\MenuProfil  $menuProfil
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(MenuProfil $menuProfil)
-    {
-        return Redirect::back();
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\MenuProfil  $menuProfil
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, MenuProfil $menuProfil)
     {
         $messages = [
@@ -99,12 +49,6 @@ class MenuProfilController extends Controller
         return Redirect::back()->with('message', 'Data Berhasil dirubah');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\MenuProfil  $menuProfil
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(MenuProfil $menuProfil)
     {
         $delete = MenuProfil::destroy($menuProfil->id);

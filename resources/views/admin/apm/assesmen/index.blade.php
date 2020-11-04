@@ -51,8 +51,9 @@
             <tr>
               <th style="width:5%">No</th>
               <th style="width:25%">Area</th>
-              <th style="width:25%">Kriteria</th>
-              <th style="width:25%">Nomor Urut</th>
+              <th style="width:20%">Kriteria</th>
+              <th style="width:15%">Nomor Urut</th>
+              <th style="width:15%">Bobot</th>
               <th style="width:20%">Aksi</th>
             </tr>
           </thead>
@@ -71,8 +72,9 @@
               <td>{{$d->area}}</td>
               <td>{{$d->kriteria}}</td>
               <td>{{$d->nomor}}</td>
+              <td>{{$d->bobot}}</td>
               <td>
-                <a href=# class="edit m-r-15" data-id="{{$d->id}}" data-area="{{$d->area}}" data-kriteria="{{$d->kriteria}}" data-nomor="{{$d->nomor}}" data-toggle="modal" data-target="#tambah"><i class="fa fa-pencil-square-o fa-lg text-primary"></i></a>
+                <a href=# class="edit m-r-15" data-id="{{$d->id}}" data-area="{{$d->area}}" data-kriteria="{{$d->kriteria}}" data-nomor="{{$d->nomor}}" data-bobot="{{$d->bobot}}" data-toggle="modal" data-target="#tambah"><i class="fa fa-pencil-square-o fa-lg text-primary"></i></a>
 
                 <form method="post" action="assesmen/{{$d->id}}" style="display:inline;">
                   @method('delete')
@@ -108,7 +110,7 @@
         </button>
         <h4 class="modal-title" id="myModal">Tambah Assesmen</h4>
       </div>
-      <form method="POST" action="{{url('assesmen')}}">
+      <form method="POST" action="{{url('admin/apm/assesmen')}}">
         <div class="modal-body">
           <p class="patch"></p>
           @csrf
@@ -124,6 +126,10 @@
             <label for="nomor">Nomor Urut</label>
             <input name="nomor" id="nomor" class="form-control @error('nomor') is-invalid @enderror" value="{{old('nomor')}}">
           </div>
+          <div class="form-group">
+            <label for="bobot">Bobot</label>
+            <input name="bobot" id="bobot" class="form-control @error('bobot') is-invalid @enderror" value="{{old('bobot')}}">
+          </div>
         </div>
         <div class=" modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -138,7 +144,7 @@
 <div id="importexcel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form method="POST" action="{{url('assesmen/import')}}" enctype="multipart/form-data">
+      <form method="POST" action="{{url('admin/apm/assesmen/import')}}" enctype="multipart/form-data">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             x
@@ -166,12 +172,13 @@
   $(document).ready(function() {
     $('#tombol').on('click', function() {
       $('#tambah .modal-title').html('Tambah Assesmen');
-      $('#tambah form').attr('action', `{{url('/assesmen')}}`);
+      $('#tambah form').attr('action', `{{url('admin/apm/assesmen')}}`);
       $('.patch').html('');
       $('#tambah button[type=submit]').html('Tambah');
       $('#area').val('');
       $('#kriteria').val('');
       $('#nomor').val('');
+      $('#bobot').val('');
     });
 
     $('.edit').on('click', function() {
@@ -179,13 +186,15 @@
         kriteria = $(this).data('kriteria'),
         area = $(this).data('area'),
         nomor = $(this).data('nomor');
+        bobot = $(this).data('bobot');
       $('#tambah .modal-title').html('Rubah Assesmen');
-      $('#tambah form').attr('action', `{{url('/assesmen/` + id + `')}}`);
+      $('#tambah form').attr('action', `{{url('admin/apm/assesmen/` + id + `')}}`);
       $('#tambah button[type=submit]').html('Update');
       $('.patch').html('@method("patch")');
       $('#area').val(area);
       $('#kriteria').val(kriteria);
       $('#nomor').val(nomor);
+      $('#bobot').val(bobot);
     });
   });
 </script>

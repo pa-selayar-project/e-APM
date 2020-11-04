@@ -1,6 +1,16 @@
 @extends('layouts.app')
 
-@section('title','Daftar Kriteria')
+@section('title','Daftar LKE Observasi')
+
+@section('stylesheet')
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.datatables.net/buttons/1.6.0/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.0/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.print.min.js"></script>
+@endsection
 
 @section('tombol')
 <div class="btn-group pull-right m-t-15">
@@ -11,10 +21,10 @@
 @section('breadcumb')
 <ol class=" breadcrumb">
   <li>
-    <a href="{{url('/')}}">Register</a>
+    <a href="{{url('/')}}">Dashboard</a>
   </li>
   <li>
-    <a href="{{url('kriteria')}}" class="active">Daftar Kriteria</a>
+    <a href="{{url('/lke_observasi')}}" class="active">LKE Observasi</a>
   </li>
 </ol>
 @endsection
@@ -24,11 +34,6 @@
   <div class="row">
     <div class="col-sm-12">
       <div class="card-box table-responsive">
-        <h4 class="m-t-0 header-title"><b>Buttons example</b></h4>
-        <p class="text-muted font-13 m-b-30">
-          The Buttons extension for DataTables provides a common set of options, API methods and
-        </p>
-
         @if ($errors->any())
         <div class="alert alert-danger">
           <ul>
@@ -54,7 +59,7 @@
             </tr>
           </thead>
           <tbody>
-            @if($data == [])
+            @if(!$data)
             <tr>
               <td height="300px" colspan="3">
                 <h1 class="text-center text-muted mt-auto">Tidak ada Data</h1>
@@ -64,14 +69,13 @@
             @foreach($data as $d)
             <tr>
               <td>{{$loop->iteration + $data->perPage() * ($data->currentPage() - 1)}}</td>
-              <td>{{$d->nama_kriteria}}</td>
+              <td>{{$d->kriteria}}</td>
               <td>
-                <a href=# class="edit m-r-15" data-nama="{{$d->nama_kriteria}}" data-id="{{$d->id}}" data-toggle="modal" data-target="#tambah"><i class="fa fa-pencil-square-o fa-lg text-primary"></i></a>
+                <a href=# class="edit m-r-15" data-kriteria="{{$d->kriteria}}" data-id="{{$d->id}}" data-toggle="modal" data-target="#tambah"><i class="fa fa-pencil-square-o fa-lg text-primary"></i></a>
 
-                <form method="post" action="{{url('kriteria/'.$d->id)}}" style="display:inline;">
+                <form method="post" action="lke_observasi/{{$d->id}}" style="display:inline;">
                   @method('delete')
                   @csrf
-                  <input type="hidden" name="id_del" value="{{$d->id}}">
                   <button type="submit" class="btn btn-link m-r-15" title="Hapus"><i class="fa fa-trash fa-lg text-danger"></i></button>
                 </form>
               </td>
@@ -103,13 +107,13 @@
         </button>
         <h4 class="modal-title" id="myModal">Tambah Kriteria</h4>
       </div>
-      <form method="POST" action="{{url('kriteria')}}">
+      <form method="POST" action="{{url('lke_observasi')}}">
         <div class="modal-body">
           <p class="patch"></p>
           @csrf
           <div class="form-group">
-            <label for="nomor">Nama Kriteria</label>
-            <input type="text" name="nama_kriteria" id="nama_kriteria" class="form-control @error('nama_kriteria') is-invalid @enderror" value="{{old('nama_kriteria')}}">
+            <label for="kriteria">Nama Kriteria</label>
+            <input type="text" name="kriteria" id="kriteria" class="form-control @error('kriteria') is-invalid @enderror" value="{{old('kriteria')}}">
           </div>
         </div>
         <div class=" modal-footer">
@@ -127,20 +131,20 @@
   $(document).ready(function() {
     $('#tombol').on('click', function() {
       $('#tambah .modal-title').html('Tambah Kriteria');
-      $('form').attr('action', `{{url('kriteria')}}`);
+      $('form').attr('action', `{{url('lke_observasi')}}`);
       $('.patch').html('');
       $('#tambah button[type=submit]').html('Tambah');
-      $('#nama_kriteria').val('');
+      $('#kriteria').val('');
     });
 
     $('.edit').on('click', function() {
-      const nama = $(this).data('nama'),
+      const kriteria = $(this).data('kriteria'),
         id = $(this).data('id');
       $('#tambah .modal-title').html('Rubah Kriteria');
-      $('#tambah form').attr('action', `{{url('/kriteria/` + id + `')}}`);
+      $('form').attr('action', `{{url('lke_observasi/` + id + `')}}`);
       $('#tambah button[type=submit]').html('Update');
       $('.patch').html('@method("patch")');
-      $('#nama_kriteria').val(nama);
+      $('#kriteria').val(kriteria);
     });
   });
 </script>

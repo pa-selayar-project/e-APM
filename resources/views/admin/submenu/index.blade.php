@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Menu')
+@section('title','Sub Menu')
 
 @section('tombol')
 <div class="btn-group pull-right m-t-15">
@@ -47,9 +47,10 @@
           <thead>
             <tr>
               <th style="width:5%">No</th>
-              <th style="width:30%">Nama Submenu</th>
-              <th style="width:30%">Link Submenu</th>
-              <th style="width:20%">Parent</th>
+              <th style="width:20%">Nama Submenu</th>
+              <th style="width:20%">Link Submenu</th>
+              <th style="width:20%">User Level</th>
+              <th style="width:20%">Menu Induk</th>
               <th style="width:15%">Aksi</th>
             </tr>
           </thead>
@@ -59,11 +60,12 @@
               <td>{{$loop->iteration + $data->perPage() * ($data->currentPage() - 1)}}</td>
               <td>{{$d->nama_submenu}}</td>
               <td>{{$d->link}}</td>
+              <td>{{$d->role['nama_role']}}</td>
               <td>{{$d->menu->nama_menu}}</td>
               <td>
-                <a href="#" class="btn btn-link text-primary edit" data-id="{{$d->id}}" data-submenu="{{$d->nama_submenu}}" data-link="{{$d->link}}" data-parent="{{$d->menu_id}}" data-toggle="modal" data-target="#tambah">
+                <a href="#" class="btn btn-link text-primary edit" data-id="{{$d->id}}" data-submenu="{{$d->nama_submenu}}" data-link="{{$d->link}}" data-role="{{$d->role['id']}}" data-parent="{{$d->menu_id}}" data-toggle="modal" data-target="#tambah">
                   <i class="fa fa-edit"></i> </a>
-                <form action="submenu/{{$d->id}}" method="POST" style="display:inline;">
+                <form action="{{url('admin/submenu')}}/{{$d->id}}" method="POST" style="display:inline;">
                   @method('delete')
                   @csrf
                   <button type="submit" class="btn btn-link text-danger"><i class="fa fa-trash-o"></i></button>
@@ -96,7 +98,7 @@
         </button>
         <h4 class="modal-title" id="myModal">Tambah Submenu</h4>
       </div>
-      <form method="POST" action="{{url('submenu')}}">
+      <form method="POST" action="{{url('admin/submenu')}}">
         <div class="modal-body">
           <p class="patch"></p>
           @csrf
@@ -108,13 +110,23 @@
             <label for="link">Link</label>
             <input type="text" name="link" id="link" class="form-control @error('link') is-invalid @enderror" value="{{old('link')}}">
           </div>
-          <div class="form-group">
-            <label for="menu_id">Parent</label>
-            <select class="form-control" name="menu_id" id="menu_id">
-              @foreach ($parent as $p)
-              <option class="form-control" value="{{$p->id}}">{{$p->nama_menu}}</option>
-              @endforeach
-            </select>
+          <div class="form-group row">
+            <div class="form-group col-sm-6">
+              <label for="role_id">Role</label>
+              <select class="form-control" name="role_id" id="role_id">
+                @foreach ($roles as $r)
+                <option class="form-control" value="{{$r->id}}">{{$r->nama_role}}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="form-group col-sm-6">
+              <label for="menu_id">Parent</label>
+              <select class="form-control" name="menu_id" id="menu_id">
+                @foreach ($parent as $p)
+                <option class="form-control" value="{{$p->id}}">{{$p->nama_menu}}</option>
+                @endforeach
+              </select>
+            </div>
           </div>
         </div>
     </div>
@@ -132,11 +144,12 @@
   $(document).ready(function() {
     $('#tombol').on('click', function() {
       $('#tambah .modal-title').html('Tambah Submenu');
-      $('#tambah form').attr('action', `{{url('submenu')}}`);
+      $('#tambah form').attr('action', `{{url('admin/submenu')}}`);
       $('.patch').html('');
       $('#tambah button[type=submit]').html('Tambah');
       $('#namaSubMenu').val('');
       $('#link').val('');
+      $('#role_id').val('');
       $('#menu_id').val('');
     });
 
@@ -144,13 +157,15 @@
       const id = $(this).data('id'),
         submenu = $(this).data('submenu'),
         link = $(this).data('link'),
+        role = $(this).data('role');
         parent = $(this).data('parent');
       $('#tambah .modal-title').html('Ubah Submenu');
-      $('#tambah form').attr('action', `{{url('submenu/` + id + `')}}`);
+      $('#tambah form').attr('action', `{{url('admin/submenu/` + id + `')}}`);
       $('.patch').html('@method("patch")');
       $('#tambah button[type=submit]').html('Ubah');
       $('#namaSubMenu').val(submenu);
       $('#link').val(link);
+      $('#role_id').val(role);
       $('#menu_id').val(parent);
     });
   });

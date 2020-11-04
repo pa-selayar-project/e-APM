@@ -12,7 +12,7 @@ class AreaController extends Controller
     public function index()
     {
         $data = Area::paginate(10);
-        return view('area.index', ['data' => $data]);
+        return view('admin/apm/area/index', ['data' => $data]);
     }
 
     public function store(Request $request)

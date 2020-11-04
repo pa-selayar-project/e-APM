@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Eviden;
 use App\Area;
 use App\Kriteria;
+use App\Assesmen;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
@@ -18,7 +20,7 @@ class EvidenController extends Controller
         $data = Eviden::paginate(10);
         $area = Area::all();
         $kriteria = Kriteria::all();
-        return view('eviden.index', [
+        return view('admin/apm/eviden/index', [
             'data' => $data,
             'area' => $area,
             'kriteria' => $kriteria
@@ -49,6 +51,29 @@ class EvidenController extends Controller
         return Redirect::back()->with('message', 'Data Eviden Berhasil dihapus');
     }
 
+    public function apm()
+    {
+        $data = Kriteria::paginate(10);
+        if(Auth::user()->level_user == 1){
+            return view('admin/apm/lke/apm', ['data'=>$data]);
+        }elseif (Auth::user()->level_user == 3) {
+            return view('assesor/apm/kriteria', ['data'=>$data]);
+        }
+    }
+    
+    public function kriteria_apm($id)
+    {
+        $kriteria = [];
+        $kriteria = Kriteria::where('id', $id)->first();
+        
+        $data = Assesmen::where('kriteria', $kriteria->nama_kriteria)->paginate(10);
+        if(Auth::user()->level_user == 1){
+            return view('admin/apm/lke/kriteria_apm', ['data'=>$data]);
+        }elseif (Auth::user()->level_user == 3) {
+            return view('assesor/apm/kriteria_apm', ['data'=>$data]);
+        }
+    }
+
     public function get_data($id)
     {
         $data = Eviden::where('id', $id)->first();
@@ -67,7 +92,7 @@ class EvidenController extends Controller
             ]
         );
         Excel::import(new \App\Imports\evidenImport, $request->file('imported'));
-        return redirect('eviden')->with('message', 'Data Eviden Berhasil diimport');
+        return redirect('admin/apm/eviden')->with('message', 'Data Eviden Berhasil diimport');
     }
 
     private function validasiRequest($tipe)

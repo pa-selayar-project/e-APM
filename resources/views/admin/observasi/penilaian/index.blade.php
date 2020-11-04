@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Daftar Eviden')
+@section('title','Daftar Penilaian Observasi')
 
 @section('stylesheet')
 <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
@@ -24,10 +24,10 @@
 @section('breadcumb')
 <ol class=" breadcrumb">
   <li>
-    <a href="{{url('/')}}">Register</a>
+    <a href="{{url('/dashboard')}}">Dashboard</a>
   </li>
   <li>
-    <a href="{{url('/eviden')}}" class="active">Daftar Eviden</a>
+    <a href="{{url('admin/observasi/penilaian')}}" class="active">Penilaian Observasi</a>
   </li>
 </ol>
 @endsection
@@ -55,14 +55,14 @@
           {{ session('message') }}
         </div>
         @endif
-
-        <table id="daftar-sk" class="table table-striped table-bordered">
+        
+        <table id="daftar-penilaian" class="table table-striped table-bordered">
           <thead>
             <tr>
               <th style="width:5%">No</th>
-              <th style="width:40%">Eviden</th>
-              <th style="width:15%">Area</th>
-              <th style="width:25S%">Kriteria</th>
+              <th style="width:50%">Penilaian</th>
+              <th style="width:15%">Bobot</th>
+              <th style="width:15%">Nilai</th>
               <th style="width:15%">Aksi</th>
             </tr>
           </thead>
@@ -77,25 +77,17 @@
             @foreach($data as $d)
             <tr>
               <td>{{$loop->iteration + $data->perPage() * ($data->currentPage() - 1)}}</td>
-              <td>{{$d->nama_eviden}}</td>
-              <td>{{$d->area->nama_area}}</td>
-              <td>{{$d->kriteria->nama_kriteria}}</td>
+              <td>{{$d->penilaian}}</td>
+              <td>{{$d->bobot}}</td>
+              <td>{{$d->skor}}</td>
               <td>
-                <a href=# class="edit m-r-15" data-id="{{$d->id}}" data-eviden="{{$d->nama_eviden}}" data-area="{{$d->area_id}}" data-kriteria="{{$d->kriteria_id}}" data-nomor="{{$d->nomor_urut}}" data-file="{{$d->file_upload}}" data-toggle="modal" data-target="#tambah"><i class="fa fa-pencil-square-o fa-lg text-primary"></i></a>
+                <a href=# class="edit m-r-15" data-id="{{$d->id}}" data-penilaian="{{$d->penilaian}}" data-kriteria="{{$d->lke_observasi_id}}" data-bobot="{{$d->bobot}}" data-toggle="modal" data-target="#tambah"><i class="fa fa-pencil-square-o fa-lg text-primary"></i></a>
 
-                <form method="post" action="eviden/{{$d->id}}" style="display:inline;">
+                <form method="post" action="{{url('admin/observasi/penilaian')}}/{{$d->id}}" style="display:inline;">
                   @method('delete')
                   @csrf
                   <button type="submit" class="btn btn-link m-r-15" title="Hapus"><i class="fa fa-trash fa-lg text-danger"></i></button>
                 </form>
-
-
-                @if($d->file_upload)
-                <a href=# class="text-danger download" data-id="{{$d->id}}" data-target="#lihat" data-toggle="modal" title="Upload"><i class="fa  fa-file-pdf-o fa-lg"></i></a>
-                <!-- <a href=# class="text-danger download" data-file="{{asset('assets/pdf')}}/{{$d->file_upload}}" data-target="#lihat" data-toggle="modal" title="Upload"><i class="fa  fa-file-pdf-o fa-lg"></i></a> -->
-                @else
-                <a href=# class="edit m-r-15" data-id="{{$d->id}}" data-eviden="{{$d->nama_eviden}}" data-area="{{$d->area_id}}" data-kriteria="{{$d->kriteria_id}}" data-nomor="{{$d->nomor_urut}}" data-file="{{$d->file_upload}}" data-toggle="modal" data-target="#tambah"><i class="fa  fa-file-pdf-o fa-lg"></i></a>
-                @endif
               </td>
             </tr>
             @endforeach
@@ -123,42 +115,28 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           x
         </button>
-        <h4 class="modal-title" id="myModal">Tambah Eviden</h4>
+        <h4 class="modal-title" id="myModal">Tambah Penilaian</h4>
       </div>
-      <form method="POST" action="{{url('eviden')}}" enctype="multipart/form-data">
+      <form method="POST" action="{{url('admin/observasi/penilaian')}}">
         <div class="modal-body">
           <p class="patch"></p>
           @csrf
           <div class="form-group">
-            <label for="nomor">Nama Eviden</label>
-            <textarea name="nama_eviden" id="nama_eviden" class="form-control @error('nama_eviden') is-invalid @enderror">{{old('nama_eviden')}}</textarea>
+            <label for="penilaian">Penilaian</label>
+            <textarea name="penilaian" id="penilaian" class="form-control @error('penilaian') is-invalid @enderror">{{old('penilaian')}}</textarea>
           </div>
           <div class="form-group row">
             <div class="col-md-6">
-              <label for="tanggal">Kriteria</label>
-              <select class="form-control" name="kriteria_id" id="kriteria_id">
+              <label for="kriteria">Kriteria</label>
+              <select class="form-control" name="lke_observasi_id" id="kriteria">
                 @foreach($kriteria as $k)
-                <option class="form-control" value="{{$k->id}}">{{$k->nama_kriteria}}</option>
+                <option class="form-control" value="{{$k->id}}">{{$k->kriteria}}</option>
                 @endforeach
               </select>
             </div>
             <div class="col-md-6">
-              <label for="tipe">Area</label>
-              <select class="form-control" name="area_id" id="area_id">
-                @foreach($area as $a)
-                <option class="form-control" value="{{$a->id}}">{{$a->nama_area}}</option>
-                @endforeach
-              </select>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-md-6">
-              <label for="file_upload">Upload PDF</label>
-              <input type="file" name="file_upload" id="file_upload" class="form-control @error('file_upload') is-invalid @enderror" value="{{old('file_upload')}}">
-            </div>
-            <div class="col-md-6">
-              <label for="nomor_urut">Nomor Urut</label>
-              <input type="text" name="nomor_urut" id="nomor_urut" class="form-control @error('nomor_urut') is-invalid @enderror" value="{{old('nomor_urut')}}">
+              <label for="bobot">Bobot</label>
+              <input type="number" class="form-control" name="bobot" id="bobot">
             </div>
           </div>
         </div>
@@ -175,7 +153,7 @@
 <div id="importexcel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form method="POST" action="{{url('eviden/import')}}" enctype="multipart/form-data">
+      <form method="POST" action="{{url('admin/observasi/penilaian/import')}}" enctype="multipart/form-data">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             x
@@ -196,64 +174,32 @@
     </div>
   </div>
 </div>
-
-<!-- //-------modal Download--------- -->
-<div id="lihat" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-          x
-        </button>
-      </div>
-        <embed src="#" type="application/pdf" height="700px" width="100%">
-    </div>
-  </div>
-</div>
-
 @endsection
 
 @section('scriptcode')
 <script type="text/javascript">
   $(document).ready(function() {
     $('#tombol').on('click', function() {
-      $('#tambah .modal-title').html('Tambah Eviden');
-      $('#tambah form').attr('action', `{{url('/eviden')}}`);
+      $('#tambah .modal-title').html('Tambah Penilaian Observasi');
+      $('#tambah form').attr('action', `{{url('admin/observasi/penilaian')}}`);
       $('.patch').html('');
       $('#tambah button[type=submit]').html('Tambah');
-      $('#nama_eviden').html('');
+      $('#penilaian').html('');
       $('#kriteria').val('');
-      $('#area').val('');
-      $('#nomor_urut').val('');
     });
 
     $('.edit').on('click', function() {
       const id = $(this).data('id'),
-        eviden = $(this).data('eviden'),
-        kriteria = $(this).data('kriteria'),
-        area = $(this).data('area'),
-        nomor = $(this).data('nomor');
-      $('#tambah .modal-title').html('Rubah Data SK');
-      $('#tambah form').attr('action', `{{url('/eviden/` + id + `')}}`);
+        penilaian = $(this).data('penilaian'),
+        kriteria = $(this).data('kriteria');
+        bobot = $(this).data('bobot');
+      $('#tambah .modal-title').html('Rubah Data Penilaian');
+      $('#tambah form').attr('action', `{{url('admin/observasi/penilaian/` + id + `')}}`);
       $('#tambah button[type=submit]').html('Update');
       $('.patch').html('@method("patch")');
-      $('#nama_eviden').html(eviden);
+      $('#penilaian').html(penilaian);
       $('#kriteria').val(kriteria);
-      $('#area').val(area);
-      $('#nomor_urut').val(nomor);
-    });
-
-    $('.download').on('click', function() {
-      const id = $(this).data('id');
-
-      $.ajax({
-        url:'eviden/get_data/'+id,
-        method:'get',
-        success:function(result){
-          $('#lihat embed').attr('src',  result);  
-        }
-      });
-      
+      $('#bobot').val(bobot);
     });
   });
 </script>

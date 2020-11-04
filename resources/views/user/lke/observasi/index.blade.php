@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Daftar Area')
+@section('title','Daftar LKE Observasi')
 
 @section('stylesheet')
 <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
@@ -21,10 +21,10 @@
 @section('breadcumb')
 <ol class=" breadcrumb">
   <li>
-    <a href="{{url('/')}}">Register</a>
+    <a href="{{url('/')}}">Dashboard</a>
   </li>
   <li>
-    <a href="{{url('/area')}}" class="active">Daftar Area</a>
+    <a href="{{url('/lke_observasi')}}" class="active">LKE Observasi</a>
   </li>
 </ol>
 @endsection
@@ -34,11 +34,6 @@
   <div class="row">
     <div class="col-sm-12">
       <div class="card-box table-responsive">
-        <h4 class="m-t-0 header-title"><b>Buttons example</b></h4>
-        <p class="text-muted font-13 m-b-30">
-          The Buttons extension for DataTables provides a common set of options, API methods and
-        </p>
-
         @if ($errors->any())
         <div class="alert alert-danger">
           <ul>
@@ -59,7 +54,7 @@
           <thead>
             <tr>
               <th style="width:10%">No</th>
-              <th style="width:70%">Area</th>
+              <th style="width:70%">Kriteria</th>
               <th style="width:20%">Aksi</th>
             </tr>
           </thead>
@@ -74,11 +69,11 @@
             @foreach($data as $d)
             <tr>
               <td>{{$loop->iteration + $data->perPage() * ($data->currentPage() - 1)}}</td>
-              <td>{{$d->nama_area}}</td>
+              <td>{{$d->kriteria}}</td>
               <td>
-                <a href=# class="edit m-r-15" data-nama="{{$d->nama_area}}" data-id="{{$d->id}}" data-toggle="modal" data-target="#tambah"><i class="fa fa-pencil-square-o fa-lg text-primary"></i></a>
+                <a href=# class="edit m-r-15" data-kriteria="{{$d->kriteria}}" data-id="{{$d->id}}" data-toggle="modal" data-target="#tambah"><i class="fa fa-pencil-square-o fa-lg text-primary"></i></a>
 
-                <form method="post" action="area/{{$d->id}}" style="display:inline;">
+                <form method="post" action="lke_observasi/{{$d->id}}" style="display:inline;">
                   @method('delete')
                   @csrf
                   <button type="submit" class="btn btn-link m-r-15" title="Hapus"><i class="fa fa-trash fa-lg text-danger"></i></button>
@@ -110,15 +105,15 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           x
         </button>
-        <h4 class="modal-title" id="myModal">Tambah Area</h4>
+        <h4 class="modal-title" id="myModal">Tambah Kriteria</h4>
       </div>
-      <form method="POST" action="{{url('area')}}">
+      <form method="POST" action="{{url('lke_observasi')}}">
         <div class="modal-body">
           <p class="patch"></p>
           @csrf
           <div class="form-group">
-            <label for="nomor">Nama Area</label>
-            <input type="text" name="nama_area" id="nama_area" class="form-control @error('nama_area') is-invalid @enderror" value="{{old('nama_area')}}">
+            <label for="kriteria">Nama Kriteria</label>
+            <input type="text" name="kriteria" id="kriteria" class="form-control @error('kriteria') is-invalid @enderror" value="{{old('kriteria')}}">
           </div>
         </div>
         <div class=" modal-footer">
@@ -135,21 +130,21 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $('#tombol').on('click', function() {
-      $('#tambah .modal-title').html('Tambah Area');
-      $('form').attr('action', `{{url('area')}}`);
+      $('#tambah .modal-title').html('Tambah Kriteria');
+      $('form').attr('action', `{{url('lke_observasi')}}`);
       $('.patch').html('');
       $('#tambah button[type=submit]').html('Tambah');
-      $('#nama_area').val('');
+      $('#kriteria').val('');
     });
 
     $('.edit').on('click', function() {
-      const nama = $(this).data('nama'),
+      const kriteria = $(this).data('kriteria'),
         id = $(this).data('id');
-      $('#tambah .modal-title').html('Rubah Area');
-      $('form').attr('action', `{{url('area/` + id + `')}}`);
+      $('#tambah .modal-title').html('Rubah Kriteria');
+      $('form').attr('action', `{{url('lke_observasi/` + id + `')}}`);
       $('#tambah button[type=submit]').html('Update');
       $('.patch').html('@method("patch")');
-      $('#nama_area').val(nama);
+      $('#kriteria').val(kriteria);
     });
   });
 </script>

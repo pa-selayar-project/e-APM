@@ -2,83 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\RoleMenu;
+use App\Role;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Redirect, Response;
 
 class RoleMenuController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return view('role_menu');
+        $data = Role::paginate(10);
+        return view('admin/role_menu/index', ['data'=> $data]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $messages = ['required' => 'kolom :attribute wajib diisi!'];
+        $request->validate(['role' => 'required|unique:roles'], $messages);
+        $insert = Role::create($request->all());
+        Response::json($insert);
+        return Redirect::back()->with('message', 'Data Berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\RoleMenu  $roleMenu
-     * @return \Illuminate\Http\Response
-     */
-    public function show(RoleMenu $roleMenu)
+    public function update(Request $request, $id)
     {
-        //
+        $messages = ['required' => 'kolom :attribute wajib diisi!'];
+        $request->validate(['role' => 'required'], $messages);
+        $update = Role::where('id', $id)->update(['role'=>$request->role]);
+        Response::json($update);
+        return Redirect::back()->with('message', 'Data Berhasil diupdate');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\RoleMenu  $roleMenu
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(RoleMenu $roleMenu)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\RoleMenu  $roleMenu
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, RoleMenu $roleMenu)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\RoleMenu  $roleMenu
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(RoleMenu $roleMenu)
+    public function destroy(Role $role)
     {
         //
     }

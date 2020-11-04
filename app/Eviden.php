@@ -20,4 +20,9 @@ class Eviden extends Model
     {
         return $this->belongsTo('App\Kriteria');
     }
+    
+    public function assesmen()
+    {
+        return $this->hasOne('App\Assesmen', 'nomor', 'nomor_urut');
+    }
 }

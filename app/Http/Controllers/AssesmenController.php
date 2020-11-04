@@ -14,7 +14,7 @@ class AssesmenController extends Controller
     public function index()
     {
         $data = Assesmen::paginate(10);
-        return view('assesmen.index', ['data' => $data]);
+        return view('admin/apm/assesmen/index', ['data' => $data]);
     }
 
     public function store(Request $request)
@@ -24,16 +24,17 @@ class AssesmenController extends Controller
         return redirect('assesmen')->with('messages', 'Data Assesmen Berhasil ditambahkan');
     }
 
-    public function update(Request $request, Assesmen $assesmen)
+    public function update(Request $request, Assesmen $assesmen, $id)
     {
-        $assesmen->update($this->validasiRequest('update'));
-        Response::json($assesmen);
+        $data= Assesmen::where('id', $id)->update($this->validasiRequest('update'));
+        Response::json($data);
         return Redirect::back()->with('message', 'Data Assesmen Berhasil dirubah');
     }
 
-    public function destroy(Assesmen $assesmen)
+    public function destroy($id)
     {
-        $delete = Assesmen::destroy($assesmen->id);
+        $delete = Assesmen::where('id', $id)->first();
+        $delete = Assesmen::destroy($delete->id);
         Response::json($delete);
         return Redirect::back()->with('message', 'Data Assesmen Berhasil dihapus');
     }
@@ -62,7 +63,7 @@ class AssesmenController extends Controller
 
         if ($tipe == 'create') {
             $rule = 'required|unique:assesmens';
-        } else {
+        } elseif($tipe == 'update') {
             $rule = 'required';
         }
 
@@ -70,6 +71,7 @@ class AssesmenController extends Controller
             'nomor' => $rule,
             'area' => 'required',
             'kriteria' => 'required',
+            'bobot' => 'required'
         ], $messages);
     }
 }
