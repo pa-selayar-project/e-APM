@@ -9,12 +9,8 @@
 
 @section('breadcumb')
 <ol class=" breadcrumb">
-  <li>
-    <a href="{{url('/')}}">Register</a>
-  </li>
-  <li>
-    <a href="{{url('/apm/lke')}}" class="active">LKE</a>
-  </li>
+  <li><a href="{{url('#')}}">APM</a></li>
+  <li><a href="{{url('user/lke/apm')}}" class="active">LKE APM</a></li>
 </ol>
 @endsection
 
@@ -23,9 +19,6 @@
   <div class="row">
     <div class="col-sm-12">
       <div class="card-box table-responsive">
-        <p class="text-muted font-13 m-b-30">
-        </p>
-
         @if ($errors->any())
         <div class="alert alert-danger">
           <ul>
@@ -42,7 +35,7 @@
         </div>
         @endif
 
-        <table id="lke1" class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered">
           <thead>
             <tr>
               <th style="width:5%">No</th>
@@ -79,7 +72,7 @@
                     </td>
                     <td class="text-center" style="width:17%" valign="top">
                       @if($e->file_upload)
-                      <a href=# class="text-danger download" data-id="{{$e->id}}" data-file="{{asset('assets/pdf')}}/{{$e->file_upload}}" data-target="#lihat" data-toggle="modal" title="Upload"><i class="fa  fa-file-pdf-o fa-lg"></i></a>
+                      <a href=# class="text-danger download" data-id="{{$e->id}}" data-target="#lihat" data-toggle="modal" title="Lihat PDF"><i class="fa  fa-file-pdf-o fa-lg"></i></a>
                       @else
                       <a href=# class="text-secondary upload" data-toggle="modal" data-id="{{$e->id}}" data-target="#tambah" title="Upload"><i class="fa  fa-file-pdf-o fa-lg"></i></a>
                       @endif
@@ -164,16 +157,16 @@
   $(document).ready(function() {
     $('.upload').on('click', function() {
       const id = $(this).data('id');
-      $('#tambah form').attr('action', `{{url('/lke/` + id + `')}}`);
+      $('#tambah form').attr('action', `{{url('user/lke/apm/` + id + `')}}`);
       $('.patch').html('@method("patch")');
     });
 
     $('.download').on('click', function() {
       const id = $(this).data('id');
-      $('.modal-footer form').attr('action',  'lke/hapus_pdf/'+id);  
+      $('.modal-footer form').attr('action', 'hapus_pdf/'+id);  
 
       $.ajax({
-        url:'lke/get_data/'+id,
+        url:`{{url('get_data/` + id + `')}}`,
         method:'get',
         success:function(result){
           $('#lihat embed').attr('src',  result);  

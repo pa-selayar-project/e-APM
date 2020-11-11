@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Daftar LKE APM')
+@section('title','Daftar Kriteria APM')
 
 @section('stylesheet')
 <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
@@ -14,17 +14,17 @@
 
 @section('tombol')
 <div class="btn-group pull-right m-t-15">
-  <button type="button" class="btn btn-primary waves-effect waves-light" onclick="javascript:back()" >Kembali <span class=" m-l-5"><i class="fa fa-plus-circle"></i></span></button>
+  <button type="button" class="btn btn-primary waves-effect waves-light" onclick="javascript:history.back()" >Kembali <span class=" m-l-5"><i class="fa fa-plus-circle"></i></span></button>
 </div>
 @endsection
 
 @section('breadcumb')
 <ol class=" breadcrumb">
   <li>
-    <a href="{{url('/dashboard')}}">Dashboard</a>
+    <a href="{{url('#')}}">APM</a>
   </li>
   <li>
-    <a href="#" class="active">Daftar Eviden</a>
+    <a href="{{url('assesor/apm')}}" class="active">Kriteria APM</a>
   </li>
 </ol>
 @endsection

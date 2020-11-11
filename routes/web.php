@@ -26,13 +26,17 @@ Route::group(['middleware' => ['auth', 'CheckRole:1']], function () {
 
 Route::group(['middleware' => ['auth', 'CheckRole:1,2,3']], function () {
     Route::get('dashboard', 'HomeController@index');
-    Route::get('lke/get_data/{id}', 'lke1Controller@get_data');
+    Route::get('get_data/{id}', 'lke1Controller@get_data');
     Route::resource('user/lke/apm', 'lke1Controller');
-    Route::patch('lke/hapus_pdf/{id}', 'lke1Controller@hapus_pdf');
+    Route::patch('user/lke/hapus_pdf/{id}', 'lke1Controller@hapus_pdf');
     Route::resource('profil', 'ProfilController');
 });
 
 Route::group(['middleware' => ['auth', 'CheckRole:3']], function () {
     Route::get('assesor/apm', 'EvidenController@apm');
     Route::get('assesor/apm/kriteria/{id}', 'EvidenController@kriteria_apm');
+    Route::get('getdatafile/{id}', [
+        'uses'=>'lke1Controller@get_data',
+        'as' => 'ajax.get.data.file'
+        ]);
 });

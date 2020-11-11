@@ -26,7 +26,7 @@ class lke1Controller extends Controller
 
     public function get_data($id)
     {
-        $data = Eviden::where('id', $id)->first();
+        $data = Eviden::find($id);
         return url('assets/pdf/'.$data->file_upload);        
     }
 
@@ -52,7 +52,7 @@ class lke1Controller extends Controller
         Storage::delete('pdf/' . $pdf->file_upload);
         $pdf->update(['file_upload' => '']);
         Response::json($pdf);
-        return Redirect::back()->with('message', 'File Berhasil dhapus');
+        return Redirect::back()->with('message', 'File Berhasil dihapus');
     }
 
     private function validasiRequest()
